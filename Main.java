@@ -19,7 +19,7 @@ public class Main {
 
 
         for (int i = 0; i < length; i++) {
-            while (uppercase > 0) {
+            if (uppercase > 0) {
                 String newElement = getRandomElement(CharType.UPPER);
                 while (Objects.equals(newElement, currentElement)) {
                     newElement = getRandomElement(CharType.UPPER);
@@ -28,8 +28,9 @@ public class Main {
                 password.append(currentElement);
                 uppercase--;
                 currentCharType = CharType.UPPER;
+                continue;
             }
-            while (lowercase > 0) {
+            if (lowercase > 0) {
                 String newElement = getRandomElement(CharType.LOWER);
                 while (Objects.equals(newElement, currentElement)) {
                     newElement = getRandomElement(CharType.LOWER);
@@ -38,8 +39,9 @@ public class Main {
                 password.append(currentElement);
                 lowercase--;
                 currentCharType = CharType.LOWER;
+                continue;
             }
-            while (digits > 0) {
+            if (digits > 0) {
                 String newElement = getRandomElement(CharType.DIGIT);
                 while (Objects.equals(newElement, currentElement)) {
                     newElement = getRandomElement(CharType.DIGIT);
@@ -49,24 +51,22 @@ public class Main {
                 digits--;
                 currentCharType = CharType.DIGIT;
             }
+        }
 
-            int remaining = length - password.length();
+        int remaining = length - password.length();
 
-            for (int j = 0; j < remaining; j++) {
-                CharType newType = getRandomType();
-                while (Objects.equals(newType, currentCharType)) {
-                    newType = getRandomType();
-                }
-                currentCharType = newType;
-                String newElement = getRandomElement(currentCharType);
-                while (Objects.equals(newElement, currentElement)) {
-                    newElement = getRandomElement(currentCharType);
-                }
-                currentElement = newElement;
-                password.append(currentElement);
+        for (int j = 0; j < remaining; j++) {
+            CharType newType = getRandomType();
+            while (Objects.equals(newType, currentCharType)) {
+                newType = getRandomType();
             }
-
-
+            currentCharType = newType;
+            String newElement = getRandomElement(currentCharType);
+            while (Objects.equals(newElement, currentElement)) {
+                newElement = getRandomElement(currentCharType);
+            }
+            currentElement = newElement;
+            password.append(currentElement);
         }
 
         System.out.println(password);
@@ -74,13 +74,13 @@ public class Main {
 
     private static String getRandomElement(CharType type) {
         String chars = "abcdefghijklmnopqrstuvwxyz";
-        String nums = "1234567890";
+        String numbers = "0123456789";
 
         int index;
         switch (type) {
             case DIGIT:
-                index = (int) (Math.random() * nums.length());
-                return String.valueOf(nums.charAt(index));
+                index = (int) (Math.random() * numbers.length());
+                return String.valueOf(numbers.charAt(index));
             case UPPER:
                 index = (int) (Math.random() * chars.length());
                 return String.valueOf(chars.charAt(index)).toUpperCase();
